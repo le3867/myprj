@@ -2,6 +2,7 @@ package com.kh.myprj.domain.member.dao;
 
 import java.sql.Date;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,18 +25,10 @@ public class MemberDAOImplTest {
 	@Disabled
 	void insert() {
 		MemberDTO mdto = new MemberDTO();
-		
-//		pstmt.setString(1, memberDTO.getEmail());
-//		pstmt.setString(2, memberDTO.getPw());
-//		pstmt.setString(3, memberDTO.getTel());
-//		pstmt.setString(4, memberDTO.getNickname());
-//		pstmt.setString(5, memberDTO.getGender());
-//		pstmt.setString(6, memberDTO.getRegion());
-//		pstmt.setDate(7, memberDTO.getBirth());
-//		pstmt.setString(8,memberDTO.getLetter());
-		mdto.setEmail("test3@test.com");
+	
+		mdto.setEmail("test4@test.com");
 		mdto.setPw("1234");
-		mdto.setTel("01012345678");
+		mdto.setTel("010-2222-2222");
 		mdto.setNickname("테스터2");
 		mdto.setGender("남");
 		mdto.setRegion("울산");
@@ -44,52 +37,41 @@ public class MemberDAOImplTest {
 		
 		log.info("member_id:{}",mdao.insert(mdto));
 	}
+	
 	@Test
-	@DisplayName("조회")
+	@DisplayName("회원조회 by id")
 	void findById() {
 		
-	log.info("findById:{}",mdao.findById(5));
-	
+		log.info("findById:{}",mdao.findByID(1));
 	}
+	
 	@Test
-	@DisplayName("조회")
+	@DisplayName("회원조회 by email")
 	void findByEmail() {
 		
-		log.info("findByEmail:{}",mdao.findByEmail("test3@test.com"));
-		
+		log.info("findById:{}",mdao.findByEmail("test@test.com"));
+	}	
+	
+	@Test
+	@DisplayName("이메일 찾기")
+	void findEmail() {
+		MemberDTO mdto = mdao.findByEmail("test@test.com");
+		String findedEmail  = 
+				mdao.findEmail(mdto.getTel(), mdto.getBirth());
+		log.info("findedEmail:"+findedEmail);
+		Assertions.assertThat(findedEmail).isEqualTo(mdto.getEmail());
+	}
+	
+	@Test
+	@DisplayName("비밀번호 찾기")
+	void findPw() {
+		MemberDTO mdto = mdao.findByEmail("test@test.com");
+		String findedPw  = 
+				mdao.findPw(mdto.getEmail(),mdto.getTel(), mdto.getBirth());
+		log.info("findedPw:"+findedPw);
+		Assertions.assertThat(findedPw).isEqualTo(mdto.getPw());		
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

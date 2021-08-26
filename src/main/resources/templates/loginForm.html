@@ -1,4 +1,3 @@
-  
 <!DOCTYPE html>
 <html lang="ko" 
       xmlns:th="http://www.thymeleaf.org"
@@ -29,12 +28,26 @@
   	.global-wrap .main .frm{
   		width:250px;
   		margin:100px 0;
+  		border: 1px solid #ccc;
+  		border-radius: 5%;
+  		padding:10px;
   	}
   	.global-wrap .main .frm .frm-ctr {
   		width:100%;
   	}
   	.global-wrap .main .frm .frm-title{
   		text-align: center;
+  	}
+  	.global-wrap .main .frm ul li{
+  		padding:5px;
+  	}
+  	.global-wrap .main .frm ul li:last-child{
+  		display:flex;
+  		justify-content: space-between;
+  		font-size: 0.8em;
+  	}
+  	.global-wrap .main .frm ul li:last-child a:hover{
+  		text-decoration: underline;
   	}
   </style>
 </head>
@@ -49,19 +62,24 @@
       <div class="inner main-inner">
       	<main>
       		<form class="frm" action="/login" method="post" th:object="${loginForm}">
-      			<h3 class="frm-title">로그인</h3>
+      			<h3 class="frm-title" th:text="#{title.form.login}">로그인</h3>
       			<ul>	
       				<li th:errors="*{global}" th:errorclass="field-msg">
 								<p th:each="err : ${#fields.globalErrors()}"
 																			 th:text="${err}">글로벌 오류 메시지</p>      				
       				</li>
-      				<li><input class="frm-ctr" type="text" name="email" id="email" placeholder="아이디를 입력하세요"
+      				<li><input class="frm-ctr" type="text" placeholder="아이디를 입력하세요"
       									 th:field="*{email}"/></li>
 							<li th:errors="*{email}" th:errorclass="field-msg">오류메세지</li>      									 
-      				<li><input class="frm-ctr" type="password" name="pw" id="pw" placeholder="비밀번호를 입력하세요"
+      				<li><input class="frm-ctr" type="password" placeholder="비밀번호를 입력하세요"
       									 th:field="*{pw}"/></li>
 							<li th:errors="*{pw}" th:errorclass="field-msg">오류메세지</li>      									 
-      				<li><button class="frm-ctr" type="submit" th:text="#{btn.login}">로그인</button></li>
+      				<li><button class="frm-ctr" type="submit" th:text="#{btn.login}" >로그인</button></li>
+      				<li>
+      					<a href="#" th:href="@{/help/findId}">아이디찾기</a>
+      					<a href="#" th:href="@{/help/findPw}">비밀번호찾기</a>
+      					<a href="#" th:href="@{/members/join}">회원가입</a>
+      					</li>
       			</ul>
       		</form>
       	</main>
